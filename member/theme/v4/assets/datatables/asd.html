@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.2/b-flash-1.5.2/b-print-1.5.2/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.2/b-flash-1.5.2/b-print-1.5.2/datatables.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css"/>
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
+ 
+
+
+</head>
+<body>
+<table id="dtable">
+    <thead>
+        <tr>
+            <th>col 1</th>
+            <th>col 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>data 1</td>
+        <td>data 2</td>
+    </tbody>
+</table>
+<script>
+        var dTable = $('#dtable');
+        dTable.DataTable({
+            'order': [[ 0, 'desc' ]],
+            'aoColumns': [
+                null,
+                {
+                    'bSortable': false
+                }
+            ]
+        });
+</script>
+</body>
+</html>
