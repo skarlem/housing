@@ -1,5 +1,6 @@
 <?php /*error_reporting(E_ALL);
 ini_set('display_errors', 1);*/
+error_reporting(E_ALL ^ E_WARNING); 
 	require 'member/includes/inc.php';
 	
 
@@ -53,7 +54,7 @@ ini_set('display_errors', 1);*/
 								
 				//header("Location: member/dashboard.php"); 
 				
-				echo '<script>window.location.href = "http://housing.oneheartwd.biz/member/dashboard.php"</script>';
+				echo '<script>window.location.href = "/housing/member/dashboard.php"</script>';
 						}
 						else{ 
 							

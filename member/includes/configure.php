@@ -2,8 +2,8 @@
 // Define the webserver and path parameters
 // * DIR_FS_* = Filesystem directories (local/physical)
 // * DIR_WS_* = Webserver directories (virtual/URL)
-  define('HTTP_SERVER', 'http://wwww.oneheartwdgold.biz/member'); // eg, http://localhost - should not be empty for productive servers
-  define('HTTPS_SERVER', 'https://www.oneheartwdgold.biz/member'); // eg, https://localhost - should not be empty for productive servers
+  define('HTTP_SERVER', 'http://housing.oneheartwd.biz/'); // eg, http://localhost - should not be empty for productive servers
+  define('HTTPS_SERVER', 'https://housing.oneheartwd.biz/'); // eg, https://localhost - should not be empty for productive servers
   
   define('ENABLE_SSL', false); // secure webserver for checkout procedure?
   define('HTTP_COOKIE_DOMAIN', '');

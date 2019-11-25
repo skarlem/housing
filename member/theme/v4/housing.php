@@ -111,10 +111,10 @@ Select Subdivision
 </div>
 
 </form>
-
-<div class="row" style="background-image: url(<?php echo THEME_FILE?>assets/img/housing_slideshow/1.jpg); height: 500px; width: 100%; border: 1px solid black;">
-
-<div class="col-lg-12" >
+<!-- <div "> -->
+<div class="row"  style="overflow-y:scroll; height: 700px;">
+<!-- style="#background-image: url(<?php echo THEME_FILE?>assets/img/housing_slideshow/1.jpg); background-position: 59% 50%; height: 500px; width: 100%; border: 1px solid black;" -->
+<div class="col-md-12">
 
 
 <?php 
@@ -138,19 +138,30 @@ if(isset($_POST['subd'])){
     $array = explode(',', $string); 
 
 ?>
-<div class="row">
-<div class="col-md-3">
 
-<p>Model Name:<?php echo $model_name?></p><p>Subdivision:<?php echo $subdivision?></p> <p>Address:<?php echo $address?></p>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $id?>">
-  Select House Model <?php echo $id?>
-</button> 
+<div class="col-md-4 float-left">
+
+<div class="card">
+  <img class="card-img-top" src="<?php echo THEME_FILE?>assets/img/house_img/asd<?php echo $id?>.jpg" width="250" height="250" alt="Card image cap">
+
+  <div class="card-body"> <p>Model Name: <?php echo $model_name?></p><p>Subdivision: <?php echo $subdivision?></p> <p>Address: <?php echo $address?></p>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $id?>">
+      Select House Model <?php echo $id?>
+    </button> 
+    
+   </div>
+  
+</div>
 </div>
 
+   
 
-</div>
+  
 
+
+          
+ 
 
 
 <!-- Modal -->
@@ -238,20 +249,19 @@ if(isset($_POST['subd'])){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="submit-btn" name="submit">Submit</button>
+        <button type="submit" class="btn btn-primary" id="submit-btn<?php echo $id?>" name="submit">Submit</button>
       </div>
       </form>
     </div>
   </div>
 </div>       
-       
+                                  
        
 <?php
   }
 }
-?>             
+?>     
 
-</div>
 <!-- end col-lg-12 -->
 <!-- 
 <div class="col-lg-7">
@@ -359,9 +369,11 @@ function checkHouse(data,id){
          
           if(xhr.responseText!=""){
             $("#txtHint"+id).attr("hidden", false);
+            document.getElementById("submit-btn"+id).disabled = true;
            // document.getElementById("txtHint"+id).innerHTML = xhr.responseText;
            }else{
-           $("#txtHint"+id).attr("hidden", true);
+            $("#txtHint"+id).attr("hidden", true);
+            document.getElementById("submit-btn"+id).disabled = false;
            }
          
        
