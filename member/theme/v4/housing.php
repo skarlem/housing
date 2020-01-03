@@ -11,18 +11,20 @@ if(isset($_POST['submit'])){
   $block = tep_db_input($_POST['block']);
   $house_name = tep_db_input($_POST['house_name']);
   $terms_id = tep_db_input($_POST['terms']);
-  $transaction = $housing->insertSelectedHouse($member_id,$house_id,$house_name,$terms_id);
-
+  $rate = $housing->getRate();
+  $transaction = $housing->insertSelectedHouse($member_id,$house_id,$house_name,$terms_id,$rate,$lot,$block);
+  
   $house_detail_id =  $housing->getLastId();
 
   foreach($housing->getPaymentScheme($terms_id) as $selection){
     $id = $selection['id'];
     $payment_type = $selection['payment_type'];
     $range = $selection['p_range'];
-    $amount = $selection['amount'];
+    $amount = $selection['amount'] * $rate;
     $p_type_id = $selection['p_type_id'];
     
-  
+    
+
 
     for($i=1; $i<=$range; $i++){
       $time = strtotime(date("Y/m/d"));
@@ -119,7 +121,8 @@ Select Subdivision
 
 <?php 
 
-if(isset($_POST['subd'])){
+
+
 
 
   foreach($housing->getHouses($subd_id) as $house){
@@ -259,7 +262,7 @@ if(isset($_POST['subd'])){
        
 <?php
   }
-}
+
 ?>     
 
 <!-- end col-lg-12 -->

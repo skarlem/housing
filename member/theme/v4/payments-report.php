@@ -3,7 +3,7 @@ include('layouts/header.php');
 include('layouts/navbar.php');
 
 
-$house_detail_id = isset($_POST['house']) ? $_POST['house'] : 0;
+ $house_detail_id = isset($_POST['house']) ? $_POST['house'] : 0;
 
 ?>
 
@@ -35,9 +35,9 @@ $house_detail_id = isset($_POST['house']) ? $_POST['house'] : 0;
         <select class="form-control selectpicker" required name="house"data-style="btn btn-link" id="exampleFormControlSelect1">
         <option value="" ></option>
         <?php
-                                
+                               /// print_r(getHouseSelections());
           foreach($housing->getHouseSelections() as $house){
-              $id = $house['housing_detail_id'];
+              $id = $house['id'];
               $desc = $house['model_name'];
               echo '
               <option value="'.$id.'">'.$desc.'</option>

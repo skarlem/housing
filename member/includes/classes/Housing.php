@@ -8,8 +8,13 @@ class Housing{
 
     function getHouseSelections(){
         $sql = "
-        SELECT hd.id as housing_detail_id,hd.house_id,h.lot,h.block,h.subdivision_id,h.model_name,hd.terms_id,hd.house_name,hd.member_id,hd.terms_id,hd.member_id,h.house_desc 
-        FROM `housing_detail` as hd inner join house as h on hd.house_id = h.id  where hd.member_id = ".$this->memberid."";
+        SELECT housing_detail.member_id,housing_detail.id,house_model.model_name,housing_detail.house_name,house_model.house_desc FROM `housing_detail` inner join house 
+on house.id = housing_detail.house_id
+
+inner join house_model on 
+house_model.house_model_id = house.house_model_id
+
+where housing_detail.member_id =  ".$this->memberid."";
 
         $query = tep_db_query($sql);
         
@@ -37,8 +42,8 @@ class Housing{
     }
 
     function getHouses($subd_id){
-        $sql = "SELECT h.lot,h.block,h.terms_id, h.id,h.model_name,h.house_desc,h.subdivision_id,s.subdivision_name,s.address 
-        FROM `house`as h inner join subdivision as s on h.subdivision_id = s.id
+        $sql = "SELECT h.terms as terms_id, h.house_model_id as id,h.model_name,h.house_desc,h.subdivision_id,s.subdivision_name,s.address 
+        FROM `house_model`as h inner join subdivision as s on h.subdivision_id = s.id
         where h.subdivision_id = $subd_id
         ";
 
@@ -181,14 +186,14 @@ class Housing{
         }
     }
 
-    function insertSelectedHouse($member_id,$house_id,$house_name,$terms_id){
+    function insertSelectedHouse($member_id,$house_id,$house_name,$terms_id,$rate,$lot,$block){
         //    $id = $this->member_id;
 
         // $sql = 'INSERT INTO `ewallet_purchase_log`( purchased, amount, date, member_id) VALUES 
         // ("'.tep_db_input($item).'","'.tep_db_input($amount).'","'.tep_db_input($date).'","'.tep_db_input($memberid).'")';
 
-        $sql = 'INSERT INTO `housing_detail`(`member_id`, `house_id`, `house_name`,`terms_id`) VALUES 
-      ("'.tep_db_input($member_id).'","'.tep_db_input($house_id).'","'.tep_db_input($house_name).'","'.tep_db_input($terms_id).'")';
+        $sql = 'INSERT INTO `housing_detail`(`member_id`, `house_id`, `house_name`,`terms_id`,`rate`,`lot`,`block`) VALUES 
+      ("'.tep_db_input($member_id).'","'.tep_db_input($house_id).'","'.tep_db_input($house_name).'","'.tep_db_input($terms_id).'","'.tep_db_input($rate).'","'.tep_db_input($lot).'","'.tep_db_input($block).'")';
 
         $query = tep_db_query($sql);
 
@@ -214,6 +219,13 @@ class Housing{
         return $result['id'];
     }
 
+    function getRate(){
+        $sql ="SELECT rate from rate where status='active'";
+        $query = tep_db_query($sql);
+        
+        $result = tep_db_fetch_array($query);
+        return $result['rate'];
+    }
 
     function setPayments($due_date,$amount,$p_type_id,$member_id,$housing_detail_id){
         $sql = 'INSERT INTO `user_payments`(`p_type_id`, `due_date`, `amount`, `status`, `member_id`,`housing_detail_id`) 
@@ -227,7 +239,7 @@ class Housing{
 
     function getPaymentsHistory($housing_detail_id){
       $sql = "select up.id,p.payment_type,up.due_date,up.amount,up.date_paid,up.status,up.housing_detail_id from user_payments as up inner join payment as p
-         on up.p_type_id = p.id where housing_detail_id = $housing_detail_id";
+         on up.p_type_id = p.id where up.housing_detail_id = $housing_detail_id";
         $query = tep_db_query($sql);
                 
         $members = array();
@@ -419,8 +431,8 @@ class Housing{
 
     function getHousingPayments($housing_id){
 
-        $sql = "select up.id,p.payment_type,up.due_date,up.amount,up.date_paid,up.status,up.housing_detail_id from user_payments as up inner join payment as p
-        on up.p_type_id = p.id where housing_detail_id = $housing_id and status='PENDING' order by up.id asc limit 15";
+        $sql = "SELECT user_payments.id,user_payments.due_date,user_payments.date_paid,user_payments.amount,user_payments.status,user_payments.member_id,user_payments.housing_detail_id,payment.payment_type FROM `user_payments` 
+        inner join payment on user_payments.p_type_id = payment.id where member_id = ".$this->memberid." and housing_detail_id = ".$housing_id."  and user_payments.status='PENDING' limit 15";
         $query = tep_db_query($sql);
                 
         $members = array();

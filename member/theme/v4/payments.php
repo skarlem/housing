@@ -82,7 +82,7 @@ if(isset($_POST['payment'])){
         <?php
                                 
           foreach($housing->getHouseSelections() as $house){
-              $id = $house['housing_detail_id'];
+              $id = $house['id'];
               $desc = $house['model_name'];
               echo '
               <option value="'.$id.'">'.$desc.'</option>

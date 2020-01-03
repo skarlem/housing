@@ -2,7 +2,38 @@
 include('layouts/header.php');
 include('layouts/navbar.php');
 
-
+if(isset($_POST['update_profile'])){
+  $memInfoDetails = array();
+ 
+	$memInfoDetails['account_fname'] = (isset($_POST['fname']) && ($_POST['fname'] !== '') ) ? $_POST['fname'] : '';
+	$memInfoDetails['account_lname'] = (isset($_POST['lname']) && ($_POST['lname'] !== '') ) ? $_POST['lname'] : '';
+	$memInfoDetails['member_email'] = (isset($_POST['email']) && ($_POST['email'] !== '') ) ? $_POST['email'] : '';
+	$memInfoDetails['address'] = (isset($_POST['address']) && ($_POST['address'] !== '') ) ? $_POST['address'] : '';
+	$memInfoDetails['member_contactnum'] = (isset($_POST['contactnum']) && ($_POST['contactnum'] !== ''))? 
+                      $_POST['contactnum'] : '';
+                      
+  $memInfoDetails = (object) $memInfoDetails;
+		$success = $memberInfo->updateInfo($memInfoDetails);
+				if($success){
+          echo '
+            <script>
+            Swal.fire({
+              title: "Good Job!",
+              text: "Profile Update Successful",
+              type: "success",
+            
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "Ok"
+            }).then((result) => {
+              if (result.value) {
+                window.location.href="profile.php";
+              }
+            })
+            </script>
+          '; 
+        }
+				
+}
 
 ?>
 
@@ -22,18 +53,18 @@ include('layouts/navbar.php');
                   </h4>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form method="POST">
                     <div class="row">
                     <div class="col-md-6">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" name="fname" class="form-control">
+                          <input type="text" name="fname" class="form-control" value="<?php echo $memberInfo->memberDetails->member_fname;?>">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" name="lname"class="form-control">
+                          <input type="text" name="lname"class="form-control" value="<?php echo $memberInfo->memberDetails->member_lname;?>">
                         </div>
                       </div>
                      
@@ -43,7 +74,7 @@ include('layouts/navbar.php');
                     <div class="col-md-4">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Email address</label>
-                          <input type="email" name="email" class="form-control">
+                          <input type="email" name="email" class="form-control" value="<?php echo $memberInfo->memberDetails->member_email;?>">
                         </div>
                       </div>
                      
@@ -52,7 +83,7 @@ include('layouts/navbar.php');
                       <div class="col-md-8">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Address</label>
-                          <input type="text" name="address"class="form-control">
+                          <input type="text" name="address"class="form-control" value="<?php echo $memberInfo->memberDetails->member_location;?>">
                         </div>
                       </div>
                     </div>
@@ -62,13 +93,13 @@ include('layouts/navbar.php');
                       <div class="col-md-4">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Contact Number</label>
-                          <input type="text" name="contact_number" class="form-control">
+                          <input type="text" name="contactnum" class="form-control"  value="<?php echo $memberInfo->memberDetails->member_contactnum;?>">
                         </div>
                       </div>
                      
                     </div>
                    
-                    <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
+                    <button type="submit" name = "update_profile" class="btn btn-rose pull-right">Update Profile</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

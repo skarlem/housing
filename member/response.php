@@ -31,18 +31,10 @@ if(isset($_POST['house_data'])){
   //  print_r($arr);
  //echo $lot." <-lot ".$block."<- block ".$house_id."<-house_id ".$subd_id."<-subd_id";
 
-    $sql = 'SELECT hd.house_id,
-    h.lot,
-    h.block,
-    h.subdivision_id,
-    h.model_name,
-    hd.house_name,
-    hd.member_id,
-    h.terms_id,
-    hd.member_id,
-    h.house_desc 
-     
-    FROM `housing_detail` as hd inner join house as h on hd.house_id = h.id  where hd.house_id = "'.$house_id.'" and h.lot= "'.$lot.'" and h.block = "'.$block.'" and h.subdivision_id = "'.$subd_id.'"';
+    $sql = 'SELECT hd.house_id, hd.lot, hd.block, hm.subdivision_id, hm.model_name, hd.house_name, hd.member_id, hm.terms, hd.member_id, hm.house_desc 
+    FROM `housing_detail` 
+    as hd inner join house as h on hd.house_id = h.house_model_id inner join house_model as hm on hm.house_model_id = h.house_model_id
+      where hd.house_id = "'.$house_id.'" and hd.lot= "'.$lot.'" and hd.block = "'.$block.'" and hm.subdivision_id = "'.$subd_id.'"';
 
     $result = mysqli_query($conn,$sql);
         

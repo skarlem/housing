@@ -100,6 +100,7 @@ error_reporting(E_ALL ^ E_WARNING);
 
 	// }
 	else{
+		echo 'qweqweqwe';
 		include 'login.php'; 
 	}
 	

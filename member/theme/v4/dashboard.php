@@ -191,7 +191,7 @@ if(isset($_POST['submit-transfer'])){
                           
                         <?php
                         foreach($housing->getHouseSelections() as $house){
-                                $id = $house['housing_detail_id'];
+                                $id = $house['id'];
                                 $model_model = $house['model_name'];
                                 $house_name= $house['house_name'];
                                 $house_desc = $house['house_desc'];
@@ -320,7 +320,7 @@ if(isset($_POST['submit-transfer'])){
 <div class="modal fade" id="transfer-fund-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-primary">
         <h5 class="modal-title" id="exampleModalLabel">Transfer Fund</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
